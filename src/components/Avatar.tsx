@@ -1,6 +1,8 @@
+type AvatarSize = 'small' | 'medium' | 'large';
+
 type Props = {
   image?: string | null;
-  size?: 'small' | 'medium' | 'large';
+  size?: AvatarSize;
   highlight?: boolean;
 };
 
@@ -13,7 +15,7 @@ export default function Avatar({
     <div className={getContainerStyle(size, highlight)}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        className={`bg-white object-cover rounded-full p-[0.1rem] ${getImageSizeStyle(
+        className={`bg-white object-cover rounded-full ${getImageSizeStyle(
           size
         )}`}
         alt='user profile'
@@ -24,17 +26,37 @@ export default function Avatar({
   );
 }
 
-function getContainerStyle(size: string, highlight: boolean): string {
+function getContainerStyle(size: AvatarSize, highlight: boolean): string {
   const baseStyle = 'rounded-full flex justify-center items-center';
   const highlighStyle = highlight
     ? 'bg-gradient-to-br from-fuchsia-600 via-rose-500 to-amber-300'
     : '';
-  const sizStyle = size === 'small' ? 'w-9 h-9' : 'w-[68px] h-[68px]';
+  const sizStyle = getContainerSize(size);
   return `${baseStyle} ${highlighStyle} ${sizStyle}`;
 }
 
-function getImageSizeStyle(size: string): string {
-  return size === 'small'
-    ? 'w-[34px] h-34px] p-[0.1rem]'
-    : 'w-16 h-16 p-[0.2rem]';
+function getContainerSize(size: AvatarSize): string {
+  switch (size) {
+    case 'small':
+      return 'w-9 h-9';
+    case 'medium':
+      return 'w-11 h-11';
+    case 'large':
+      return 'w-[68px] h-[68px]';
+    default:
+      throw Error(`Unsupported type size: ${size}`);
+  }
+}
+
+function getImageSizeStyle(size: AvatarSize): string {
+  switch (size) {
+    case 'small':
+      return 'w-[34px] h-34px] p-[0.1rem]';
+    case 'medium':
+      return 'w-[42px] h-[42px] p-[0.1rem]';
+    case 'large':
+      return 'w-[68px] h-[68px] p-[0.2rem]';
+    default:
+      throw Error(`Unsupported type size: ${size}`);
+  }
 }
