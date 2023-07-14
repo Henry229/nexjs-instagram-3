@@ -11,7 +11,7 @@ export default function PostModal({ onClose, children }: Props) {
       className='fixed top-0 left-0 z-50 flex flex-col items-center justify-center w-full h-full bg-neutral-900/70'
       onClick={(event) => {
         if (event.target === event.currentTarget) onClose();
-      }}
+      }} // event.target === event.currentTarget 의미는 모달창 밖을 클릭했을 시를 의미함
     >
       <button
         className='fixed top-0 right-0 p-8 text-white'
