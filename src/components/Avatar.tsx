@@ -51,7 +51,7 @@ function getContainerSize(size: AvatarSize): string {
 function getImageSizeStyle(size: AvatarSize): string {
   switch (size) {
     case 'small':
-      return 'w-[34px] h-34px] p-[0.1rem]';
+      return 'w-[34px] h-[34px] p-[0.1rem]';
     case 'medium':
       return 'w-[42px] h-[42px] p-[0.1rem]';
     case 'large':
