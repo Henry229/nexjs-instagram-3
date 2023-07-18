@@ -80,7 +80,6 @@ function mapPosts(posts: SimplePost[]) {
 }
 
 export async function likePost(postId: string, userId: string) {
-  console.log('@@@ userId', userId);
 
   return client
     .patch(postId)

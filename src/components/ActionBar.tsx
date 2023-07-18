@@ -8,6 +8,7 @@ import BookmarkFillIcon from './ui/icons/BookmarkFillIcon';
 import { SimplePost } from '@/models/post';
 import { useSession } from 'next-auth/react';
 import { useSWRConfig } from 'swr';
+import usePosts from '@/hooks/posts';
 
 type Props = {
   post: SimplePost;
@@ -19,16 +20,13 @@ export default function ActionBar({ post }: Props) {
   const user = session?.user;
 
   const liked = user ? likes.includes(user.username) : false;
-  console.log('>>>liked', liked);
 
   const [bookmarked, setBookmarked] = useState(false);
-  const { mutate } = useSWRConfig();
+  const { setLike } = usePosts();
   const handleLike = (like: boolean) => {
-    fetch('api/likes', {
-      method: 'PUT',
-      body: JSON.stringify({ id, like }),
-    }).then(() => mutate('/api/posts'));
-    // like를 업데이트 했으면 SWR에게 전체 cache를 update해달라고 하는 것
+    if (user) {
+      setLike(post, user.username, like);
+    }
   };
   return (
     <>
