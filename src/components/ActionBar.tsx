@@ -17,14 +17,17 @@ export default function ActionBar({ post }: Props) {
   const { id, likes, username, text, createdAt } = post;
   const { data: session } = useSession();
   const user = session?.user;
+
   const liked = user ? likes.includes(user.username) : false;
+  console.log('>>>liked', liked);
+
   const [bookmarked, setBookmarked] = useState(false);
   const { mutate } = useSWRConfig();
   const handleLike = (like: boolean) => {
-    fetch('/api/likes', {
+    fetch('api/likes', {
       method: 'PUT',
       body: JSON.stringify({ id, like }),
-    }).then(() => mutate('api/posts'));
+    }).then(() => mutate('/api/posts'));
     // like를 업데이트 했으면 SWR에게 전체 cache를 update해달라고 하는 것
   };
   return (
