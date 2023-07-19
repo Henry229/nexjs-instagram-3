@@ -1,5 +1,5 @@
 import { SimplePost } from '@/models/post';
-import useSWR, { useSWRConfig } from 'swr';
+import useSWR from 'swr';
 
 async function updateLike(id: string, like: boolean) {
   return fetch('/api/likes', {
