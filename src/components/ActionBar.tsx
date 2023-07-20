@@ -12,10 +12,10 @@ import CommentForm from './CommentForm';
 type Props = {
   post: SimplePost;
   children?: React.ReactNode;
-  // onComment: (comment: Comment) => void;
+  onComment: (comment: Comment) => void;
 };
 
-export default function ActionBar({ post, children }: Props) {
+export default function ActionBar({ post, children, onComment }: Props) {
   const { id, likes, createdAt } = post;
   const { user, setBookmark } = useMe();
   const { setLike } = usePosts();
@@ -31,9 +31,9 @@ export default function ActionBar({ post, children }: Props) {
     user && setBookmark(id, bookmark);
   };
 
-  // const handleComment = (comment: string) => {
-  // user && onComment({ comment, username: user.username, image: user.image });
-  // };
+  const handleComment = (comment: string) => {
+    user && onComment({ comment, username: user.username, image: user.image });
+  };
 
   return (
     <>
@@ -61,7 +61,7 @@ export default function ActionBar({ post, children }: Props) {
           {parseDate(createdAt)}
         </p>
       </div>
-      {/* <CommentForm onPostComment={handleComment} /> */}
+      <CommentForm onPostComment={handleComment} />
     </>
   );
 }
