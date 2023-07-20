@@ -1,4 +1,3 @@
-import { SimplePost } from '@/models/post';
 import { HomeUser } from '@/models/user';
 import useSWR from 'swr';
 
@@ -21,8 +20,6 @@ export default function useMe() {
         ? [...bookmarks, postId]
         : bookmarks.filter((item) => item !== postId),
     };
-
-    console.log('>>>check: ', postId, bookmark);
 
     return mutate(updateBookmark(postId, bookmark), {
       optimisticData: newUser,
