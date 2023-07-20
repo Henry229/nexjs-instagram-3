@@ -19,6 +19,7 @@ type Props = {
 export default function PostListCard({ post, priority = false }: Props) {
   const { userImage, username, image, comments, text } = post;
   const [openModal, setOpenModal] = useState(false);
+  const handlePostComment = (comment: string) => {};
   return (
     <article className='border border-gray-200 rounded-lg shadow-md'>
       <PostUserAvatar image={userImage} username={username} />
@@ -43,7 +44,7 @@ export default function PostListCard({ post, priority = false }: Props) {
           >{`View all ${comments} comments`}</button>
         )}
       </ActionBar>
-      <CommentForm />
+      <CommentForm onPostComment={handlePostComment} />
       {openModal && (
         <ModalPortal>
           <PostModal onClose={() => setOpenModal(false)}>
