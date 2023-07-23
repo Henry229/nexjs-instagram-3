@@ -1,6 +1,6 @@
 import post from '../../sanit-studio/schemas/post';
 import { SimplePost } from '@/models/post';
-import { client, urlFor } from './sanity';
+import { assetsURL, client, urlFor } from './sanity';
 
 // "username": author->username,
 //post.author.username 을 post.username으로 간략하게 변경하는것
@@ -114,4 +114,35 @@ export async function addComment(
       },
     ])
     .commit({ autoGenerateArrayKeys: true }); // id를 자동으로 생성하게 함
+}
+
+export async function createPost(userId: string, text: string, file: Blob) {
+  console.log(userId, text, file);
+
+  return fetch(assetsURL, {
+    method: 'POST',
+    headers: {
+      'content-type': file.type,
+      authorization: `Bearer ${process.env.SANITY_SECRET_TOKEN}`,
+    },
+    body: file,
+  })
+    .then((res) => res.json())
+    .then((result) => {
+      return client.create(
+        {
+          _type: 'post',
+          author: { _ref: userId },
+          photo: { asset: { _ref: result.document._id } },
+          comment: [
+            {
+              comment: text,
+              author: { _ref: userId, _type: 'reference' },
+            },
+          ],
+          likes: [],
+        },
+        { autoGenerateArrayKeys: true }
+      );
+    });
 }
