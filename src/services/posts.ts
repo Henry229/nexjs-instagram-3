@@ -134,7 +134,7 @@ export async function createPost(userId: string, text: string, file: Blob) {
           _type: 'post',
           author: { _ref: userId },
           photo: { asset: { _ref: result.document._id } },
-          comment: [
+          comments: [
             {
               comment: text,
               author: { _ref: userId, _type: 'reference' },
